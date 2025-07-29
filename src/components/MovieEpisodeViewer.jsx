@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { X, Play, Download, Clock, Star, Heart, Share, Bookmark, ChevronUp, ChevronDown } from "lucide-react";
 
@@ -84,19 +85,36 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   
-  // Prevent body scroll when viewer is open
+  // Prevent body scroll when viewer is open and add keyboard navigation
   useEffect(() => {
     if (isOpen) {
       // Store original overflow and set to hidden
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       
-      // Cleanup function to restore original overflow
+      // Add keyboard event listener
+      const handleKeyDown = (e) => {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          navigateScene('up');
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          navigateScene('down');
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          onClose();
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+      
+      // Cleanup function to restore original overflow and remove listener
       return () => {
         document.body.style.overflow = originalOverflow;
+        document.removeEventListener('keydown', handleKeyDown);
       };
     }
-  }, [isOpen]);
+  }, [isOpen, currentSceneIndex, onClose]);
   
   if (!movie || !isOpen) return null;
 
@@ -115,15 +133,32 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
   };
 
   const navigateScene = (direction) => {
+    const scenes = generateMovieScenes(movie);
+    let newIndex = currentSceneIndex;
+    
     if (direction === 'up' && currentSceneIndex > 0) {
-      setCurrentSceneIndex(currentSceneIndex - 1);
+      newIndex = currentSceneIndex - 1;
     } else if (direction === 'down' && currentSceneIndex < scenes.length - 1) {
-      setCurrentSceneIndex(currentSceneIndex + 1);
+      newIndex = currentSceneIndex + 1;
+    }
+    
+    if (newIndex !== currentSceneIndex) {
+      setCurrentSceneIndex(newIndex);
+      
+      // Scroll to the corresponding scene
+      const container = document.querySelector('.episode-viewer-container');
+      if (container) {
+        const targetScrollTop = newIndex * window.innerHeight;
+        container.scrollTo({
+          top: targetScrollTop,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50">
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999]">
       {/* Static Background */}
       <div className="absolute inset-0 bg-black">
         <img 
@@ -135,7 +170,7 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
       </div>
       
       {/* Floating Header */}
-      <div className="absolute top-0 left-0 right-0 z-30 bg-gradient-to-b from-black/95 via-black/70 to-transparent p-4">
+      <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/95 via-black/70 to-transparent p-4 z-51">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <img 
@@ -162,7 +197,7 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
               e.stopPropagation();
               onClose();
             }}
-            className="text-white hover:bg-red-500/20 rounded-full border border-white/20 flex-shrink-0 ml-2"
+            className="text-white hover:bg-red-500/20 rounded-full border border-white/20 flex-shrink-0 ml-2 z-51"
           >
             <X className="w-5 h-5" />
           </Button>
@@ -170,7 +205,7 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
       </div>
 
       {/* Scene Progress Indicator */}
-      <div className="absolute top-20 left-0 right-0 z-30 px-4">
+      <div className="absolute top-20 left-0 right-0 px-4 z-51">
         <div className="max-w-md mx-auto">
           <div className="flex gap-1">
             {scenes.map((_, index) => (
@@ -215,7 +250,7 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
 
       {/* TikTok-style Vertical Feed */}
       <div 
-        className="h-screen overflow-y-auto snap-y snap-mandatory pt-24 pb-4 scrollbar-hide relative z-20"
+        className="episode-viewer-container h-screen overflow-y-auto snap-y snap-mandatory pt-24 pb-4 scrollbar-hide relative z-20"
         onScroll={handleScroll}
         style={{ scrollBehavior: 'smooth' }}
       >
@@ -386,6 +421,10 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
       </div>
     </div>
   );
+
+  return typeof window !== 'undefined' 
+    ? createPortal(modalContent, document.body)
+    : null;
 };
 
 export default MovieEpisodeViewer;

@@ -42,7 +42,7 @@ const TVShowCarousel = ({ title, shows, onShowClick }) => {
   };
 
   return (
-    <div className="relative group mb-12">
+    <div className="relative group mb-12 z-10">
       <h2 className={`text-2xl font-bold mb-6 px-8 transition-colors duration-1000 ${
         theme === 'dark' ? 'text-white' : 'text-gray-900'
       }`}>

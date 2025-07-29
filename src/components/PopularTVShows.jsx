@@ -111,7 +111,7 @@ const PopularTVShows = () => {
   }
 
   return (
-    <section id="series" className="relative z-10 py-4 transition-colors duration-1000">
+    <section id="series" className="relative z-1 py-4 transition-colors duration-1000">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 px-8">
           <h2 className={`text-4xl font-bold mb-4 transition-colors duration-1000 ${
