@@ -215,7 +215,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright */}
           <div className={`text-sm ${getTextColor('muted')}`}>
-            © 2024 VERTICA. All rights reserved. • Stream Beyond Reality
+            © 2024 VERTICA. All rights reserved. • Made by Mudit
           </div>
 
           {/* Social Links */}
