@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎬 Vertica - Stream Beyond Reality
 
-## Getting Started
+A modern, responsive streaming platform built with Next.js, featuring movie discovery, search functionality, and an immersive user experience.
 
-First, run the development server:
 
+## ✨ Features
+
+### 🎯 **Core Features**
+- **Movie Discovery**: Browse trending, top-rated movies and popular TV shows
+- **Smart Search**: Real-time movie search with typeahead suggestions
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Dark/Light Theme**: Toggle between themes with smooth animations
+- **Smooth Navigation**: Animated scrolling between sections
+
+### 🎨 **Visual Features**
+- **Vanta.js Background**: Interactive 3D fog effect across the entire site
+- **Framer Motion**: Smooth page transitions and animations
+- **Gradient Text Effects**: Eye-catching typography with animated underlines
+- **Theme-Aware UI**: Consistent styling across light and dark modes
+
+### 🔍 **Search Functionality**
+- **Typeahead Suggestions**: Ghost text suggestions as you type
+- **TMDB Integration**: Real-time movie data from The Movie Database
+- **Keyboard Navigation**: Tab to accept suggestions, Escape to clear
+- **Debounced Search**: Optimized API calls with 300ms debouncing
+
+### 📱 **User Experience**
+- **Smooth Scrolling**: Custom easing animations for navigation
+- **Loading States**: Elegant loading indicators
+- **Error Handling**: Graceful error messages and fallbacks
+- **Accessibility**: Keyboard navigation and screen reader support
+
+## 🚀 Setup Instructions
+
+### **Prerequisites**
+- Node.js 18+ installed
+- npm or yarn package manager
+- TMDB API key (free from [themoviedb.org](https://www.themoviedb.org/))
+
+### **1. Clone the Repository**
+```bash
+git clone https://github.com/mudit203/vertica-app.git
+cd vertica-app
+```
+
+### **2. Install Dependencies**
+```bash
+npm install
+# or
+yarn install
+```
+
+### **3. Environment Setup**
+Create a `.env.local` file in the root directory:
+```env
+NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key_here
+```
+
+> **Get your TMDB API key:**
+> 1. Sign up at [themoviedb.org](https://www.themoviedb.org/)
+> 2. Go to Settings → API
+> 3. Create new API key (v3 auth)
+> 4. Copy the API key to your `.env.local` file
+
+### **4. Run Development Server**
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### **5. Build for Production**
+```bash
+npm run build
+npm start
+# or
+yarn build
+yarn start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+### **Frontend**
+- **Next.js 14** - React framework with App Router
+- **React 18** - Component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Animation library
+- **Lucide React** - Icon library
 
-To learn more about Next.js, take a look at the following resources:
+### **3D & Visual Effects**
+- **Vanta.js** - 3D background effects
+- **Three.js** - 3D graphics library
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **API & Data**
+- **TMDB API** - Movie and TV show data
+- **Axios** - HTTP client for API requests
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **Development Tools**
+- **ESLint** - Code linting
+- **PostCSS** - CSS processing
+- **Autoprefixer** - CSS vendor prefixing
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+vertica-app/
+├── public/                 # Static assets
+│   ├── hero-bg*.jpg       # Background images
+│   └── *.svg              # Icons
+├── src/
+│   ├── app/               # Next.js App Router
+│   │   ├── globals.css    # Global styles
+│   │   ├── layout.js      # Root layout
+│   │   └── page.js        # Home page
+│   ├── components/        # React components
+│   │   ├── ui/           # UI components
+│   │   ├── Hero.jsx      # Main hero section
+│   │   ├── Trending.jsx  # Trending movies
+│   │   ├── TopRated.jsx  # Top rated movies
+│   │   └── ...           # Other components
+│   └── lib/              # Utility libraries
+├── .env.local            # Environment variables
+├── tailwind.config.js    # Tailwind configuration
+└── package.json          # Dependencies
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
