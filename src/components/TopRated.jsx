@@ -71,7 +71,7 @@ const TopRated = () => {
 
   if (loading) {
     return (
-      <section className={`py-16 transition-colors duration-1000 ${
+      <section className={`py-4 transition-colors duration-1000 ${
         theme === 'dark' ? 'bg-black' : 'bg-gray-50'
       }`}>
         <div className="max-w-7xl mx-auto">
@@ -92,7 +92,7 @@ const TopRated = () => {
 
   if (error) {
     return (
-      <section className={`py-16 transition-colors duration-1000 ${
+      <section className={`py-4 transition-colors duration-1000 ${
         theme === 'dark' ? 'bg-black' : 'bg-gray-50'
       }`}>
         <div className="max-w-7xl mx-auto">
@@ -112,7 +112,7 @@ const TopRated = () => {
   }
 
   return (
-    <section id="movies" className="relative z-10 py-16 transition-colors duration-1000">
+    <section id="movies" className="relative z-10 py-4 transition-colors duration-1000">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 px-8">
           <h2 className={`text-4xl font-bold mb-4 transition-colors duration-1000 ${

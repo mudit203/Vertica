@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { X, Play, Download, Clock, Star, Heart, Share, Bookmark, ChevronUp, ChevronDown } from "lucide-react";
 
@@ -83,6 +83,20 @@ const MovieEpisodeViewer = ({ movie, isOpen, onClose }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  
+  // Prevent body scroll when viewer is open
+  useEffect(() => {
+    if (isOpen) {
+      // Store original overflow and set to hidden
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      
+      // Cleanup function to restore original overflow
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
   
   if (!movie || !isOpen) return null;
 
